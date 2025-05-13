@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function App() {
-    const [currentPage, setCurrentPage] = useState('home');
+    const [currentPage, setCurrentPage] = useState('Home');
 
     const navLinks = [
         { name: 'Home', path: '/' },

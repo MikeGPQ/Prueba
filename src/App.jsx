@@ -1,29 +1,16 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 
-export default function App() {
-    const [currentPage, setCurrentPage] = useState('Home');
+function AppContent() {
+    const location = useLocation();
+    const currentPage = location.pathname.slice(1) || "Home";
 
     const navLinks = [
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
         { name: 'Services', path: '/services' },
         { name: 'Contact', path: '/contact' },
-    ];
-
-    const getPageContent = () => {
-        switch (currentPage) {
-            case 'Home':
-                return "Welcome to the Home Page!";
-            case 'About':
-                return "Learn more about us here";
-            case 'Services':
-                return "Check out our services";
-            case 'Contact':
-                return "Get in touch with us";
-            default:
-                return "Page not found";
-        }
-    };
+    ]; 
 
     return (
         <div className="min-h-screen flex">
@@ -32,27 +19,37 @@ export default function App() {
                 {/* Mobile Menu */}
                 <div className="flex flex-col space-y-0.5">
                     {navLinks.map((link) => (
-                        <button
+                        <Link
                             key={link.name}
-                            href={link.path}
-                            onClick={() => setCurrentPage(link.name)}
-                            className= "bg-white text-black rounded-none hover:bg-gray-100"
+                            to={link.path}
+                            className={`block bg-white text-black p-2 rounded-none hover:bg-gray-100 ${currentPage === link.name.toLowerCase() ? 'font-bold border-l-2 border-black' : ''
+                                }`}
                         >
                             {link.name}
-                        </button>
-
+                        </Link>
                     ))}
                 </div>
             </nav>
 
             {/* Dynamic Content */}
-            <div className="flex flex-col justify-center">
-                <h1>
-                    {getPageContent()}
-                </h1>
+            <div className="flex-1 flex flex-col justify-center p-8">
+                <Routes>
+                    <Route path="/" element={<h1>Welcome to the Home Page!</h1>} />
+                    <Route path="/about" element={<h1>Learn more about us here</h1>} />
+                    <Route path="/services" element={<h1>Check out our services</h1>} />
+                    <Route path="/contact" element={<h1>Get in touch with us</h1>} />
+                </Routes>
             </div>
         </div>
 
 
+    );
+}
+
+export default function App() {
+    return (
+        <Router>
+            <AppContent/>
+        </Router>
     );
 }

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from './Context/authContext';
+import { AuthProvider } from './context/authContext';
 import { Loading } from './NavBar';
 
 export default function App() {
